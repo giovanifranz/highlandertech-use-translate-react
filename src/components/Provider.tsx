@@ -29,7 +29,7 @@ function Provider({ ...props }: Props, ref: ReactRef<Ref>) {
 
   return (
     <Context.Provider value={{ language, toggleLanguage }}>
-      <div {...props} ref={internalRef} />
+      <div {...props} ref={internalRef} data-version={version} />
     </Context.Provider>
   );
 }
