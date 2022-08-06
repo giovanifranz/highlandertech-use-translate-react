@@ -51,7 +51,7 @@ const useLanguage = () => {
   const context = useContext(Context);
 
   invariant(
-    context === null,
+    context !== null,
     "useLanguage must be used within a LanguageProvider"
   );
 
