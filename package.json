@@ -4,7 +4,7 @@
   "license": "MIT",
   "version": "0.0.0",
   "main": "./dist/index.js",
-  "module": "./dist/index.esm.js",
+  "module": "module",
   "exports": {
     ".": {
       "import": "./dist/index.esm.js",
