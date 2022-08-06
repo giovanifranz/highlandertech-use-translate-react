@@ -18,6 +18,8 @@ type Ref = HTMLDivElement;
 
 type Props = HTMLAttributes<Ref>;
 
+type Language = "portuguese" | "english";
+
 interface ContextType {
   language: Language;
   toggleLanguage: Dispatch<SetStateAction<Language>>;

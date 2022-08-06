@@ -1,1 +1,0 @@
-type Language = "portuguese" | "english";

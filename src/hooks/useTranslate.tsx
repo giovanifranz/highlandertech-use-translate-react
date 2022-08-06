@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 
-type Text = Language;
+type Text = "portuguese" | "english";
 
 type DifferentTextsInput<T> = {
   portuguese: T;
