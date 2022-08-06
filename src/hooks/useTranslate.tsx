@@ -5,14 +5,6 @@ type Text = Language;
 type Data<T> = {
   portuguese: T;
   english: T;
-  spanish: T;
-  mandarim: T;
-  chinese: T;
-  japanese: T;
-  korean: T;
-  french: T;
-  hindi: T;
-  russian: T;
 };
 
 type Props<GenericTexts> = { data: Data<GenericTexts>; language: Text };
