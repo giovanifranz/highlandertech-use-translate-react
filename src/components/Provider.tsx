@@ -14,7 +14,7 @@ interface ContextType {
   toggleLanguage: (lang: Language) => void;
 }
 
-const Context = createContext({} as ContextType);
+const Context = createContext<ContextType | null>(null);
 
 // NÃO EDITAR ESSA LINHA
 const version = "development";
