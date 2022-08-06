@@ -2,18 +2,25 @@ import { useMemo } from "react";
 
 type Text = Language;
 
-type Data<T> = {
+type DifferentTextsInput<T> = {
   portuguese: T;
   english: T;
 };
 
-type Props<GenericTexts> = { data: Data<GenericTexts>; language: Text };
+type Props<GenericTexts> = {
+  textsInput: DifferentTextsInput<GenericTexts>;
+  language: Text;
+};
 
 export function useTranslate<GenericTexts>({
-  data,
+  textsInput,
   language,
 }: Props<GenericTexts>): GenericTexts {
-  return useMemo(() => data[language], [data, language]);
+  return useMemo(() => textsInput[language], [textsInput, language]);
 }
 
-export type { Data, Text as Language, Props as useTranslateProps };
+export type {
+  DifferentTextsInput,
+  Text as Language,
+  Props as useTranslateProps,
+};
