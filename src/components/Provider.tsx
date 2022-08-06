@@ -1,16 +1,5 @@
-import type {
-  Dispatch,
-  SetStateAction,
-  Ref as ReactRef,
-  HTMLAttributes,
-} from "react";
-import {
-  createContext,
-  useContext,
-  useMemo,
-  useState,
-  forwardRef,
-} from "react";
+import { Ref as ReactRef, HTMLAttributes, useCallback } from "react";
+import { createContext, useContext, useState, forwardRef } from "react";
 import useForwardRef from "@bedrock-layout/use-forwarded-ref";
 import invariant from "tiny-invariant";
 
@@ -22,7 +11,7 @@ type Language = "portuguese" | "english";
 
 interface ContextType {
   language: Language;
-  toggleLanguage: Dispatch<SetStateAction<Language>>;
+  toggleLanguage: (lang: Language) => void;
 }
 
 const Context = createContext({} as ContextType);
@@ -31,19 +20,15 @@ const Context = createContext({} as ContextType);
 const version = "development";
 
 function Provider({ ...props }: Props, ref: ReactRef<Ref>) {
-  const [language, toggleLanguage] = useState<Language>("portuguese");
+  const [language, setLanguage] = useState<Language>("portuguese");
   const internalRef = useForwardRef(ref);
 
-  const value = useMemo(
-    () => ({
-      language,
-      toggleLanguage,
-    }),
-    [language, toggleLanguage]
-  );
+  const toggleLanguage = useCallback((lang: Language) => {
+    setLanguage(lang === "portuguese" ? "english" : "portuguese");
+  }, []);
 
   return (
-    <Context.Provider value={value}>
+    <Context.Provider value={{ language, toggleLanguage }}>
       <div {...props} ref={internalRef} />
     </Context.Provider>
   );
