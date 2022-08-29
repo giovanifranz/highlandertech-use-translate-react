@@ -1,6 +1,12 @@
-import { Ref as ReactRef, HTMLAttributes, useCallback } from "react";
-import { createContext, useContext, useState, forwardRef } from "react";
 import useForwardRef from "@bedrock-layout/use-forwarded-ref";
+import type { HTMLAttributes, Ref as ReactRef } from "react";
+import {
+  createContext,
+  forwardRef,
+  useCallback,
+  useContext,
+  useState,
+} from "react";
 import invariant from "tiny-invariant";
 
 type Ref = HTMLDivElement;
@@ -14,36 +20,36 @@ interface ContextType {
   toggleLanguage: (lang: Language) => void;
 }
 
-const Context = createContext<ContextType | null>(null);
+const LanguageContext = createContext<ContextType | null>(null);
 
-// NÃO EDITAR ESSA LINHA
-const version = "development";
-
-function Provider({ ...props }: Props, ref: ReactRef<Ref>) {
-  const [language, setLanguage] = useState<Language>("portuguese");
-  const internalRef = useForwardRef(ref);
-
-  const toggleLanguage = useCallback((lang: Language) => {
-    setLanguage(lang === "portuguese" ? "english" : "portuguese");
-  }, []);
-
-  return (
-    <Context.Provider value={{ language, toggleLanguage }}>
-      <div {...props} ref={internalRef} data-version={version} />
-    </Context.Provider>
-  );
-}
-
-const useLanguage = () => {
-  const context = useContext(Context);
+const useLanguage = (): ContextType => {
+  const context = useContext(LanguageContext);
 
   invariant(
     context !== null,
     "useLanguage must be used within a LanguageProvider"
   );
 
-  return context as ContextType;
+  return context;
 };
+
+// NÃO EDITAR ESSA LINHA
+const version = "development";
+
+function Provider({ ...props }: Props, ref: ReactRef<Ref>) {
+  const internalRef = useForwardRef(ref);
+  const [language, setLanguage] = useState<Language>("portuguese");
+
+  const toggleLanguage = useCallback((lang: Language) => {
+    setLanguage(lang === "portuguese" ? "english" : "portuguese");
+  }, []);
+
+  return (
+    <LanguageContext.Provider value={{ language, toggleLanguage }}>
+      <div {...props} ref={internalRef} data-version={version} />
+    </LanguageContext.Provider>
+  );
+}
 
 const ForwardedProvider = forwardRef<Ref, Props>(Provider);
 
